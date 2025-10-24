@@ -8,10 +8,10 @@ import hashlib
 app = Flask(__name__)
 
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/thB2B22uit/webhook", methods=["POST"])
 def webhook():
     try:
-        deploy_dir = "/app/Deploy"
+        deploy_dir = "./Deploy"
         sh_files = sorted(glob.glob(os.path.join(deploy_dir, "*.sh")))
 
         if not sh_files:
