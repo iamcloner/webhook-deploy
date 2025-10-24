@@ -1,0 +1,12 @@
+services:
+  webhook:
+    build: .
+    container_name: webhook-deployer
+    restart: always
+    ports:
+      - "127.0.0.1:7787:7787"
+    volumes:
+      - ./Deploy:/app/Deploy
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PYTHONUNBUFFERED=1
