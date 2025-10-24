@@ -10,7 +10,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PYTHONUNBUFFERED=1
-      - GITHUB_SECRET=${GITHUB_SECRET}
     networks:
       - meet.jitsi
 networks:

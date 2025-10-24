@@ -7,31 +7,9 @@ import hashlib
 
 app = Flask(__name__)
 
-GITHUB_SECRET = os.getenv("GITHUB_SECRET", "")
-
-
-def verify_github_signature(payload, signature):
-    if not GITHUB_SECRET:
-        return False
-    if not signature:
-        return False
-
-    sha_name, signature = signature.split("=")
-    if sha_name != "sha256":
-        return False
-
-    mac = hmac.new(GITHUB_SECRET.encode(), msg=payload, digestmod=hashlib.sha256)
-    return hmac.compare_digest(mac.hexdigest(), signature)
-
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    signature = request.headers.get("X-Hub-Signature-256")
-    payload = request.data
-
-    if not verify_github_signature(payload, signature):
-        abort(403, "Invalid signature")
-
     try:
         deploy_dir = "/app/Deploy"
         sh_files = sorted(glob.glob(os.path.join(deploy_dir, "*.sh")))
